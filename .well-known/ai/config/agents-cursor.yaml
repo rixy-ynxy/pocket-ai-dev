@@ -1,0 +1,85 @@
+# @version[1.0.0]
+# @owner[ai-team]
+# @lastUpdated[2025-03-24]
+# @purpose[cursor-agent-configuration]
+# @category[configuration]
+# @status[active]
+# @schema[https://yunixy.co.jp/schemas/cursor-agent-schema.json]
+# yaml-language-server: $schema=https://yunixy.co.jp/schemas/cursor-agent-schema.json
+
+# Cursor AIエージェント固有の設定
+version: "1.0"
+
+# Cursor固有の振る舞い設定
+behavior:
+  # エディタ統合
+  editor_integration:
+    suggest_completions: true
+    suggest_refactorings: true
+    inline_documentation: true
+    error_detection: true
+  
+  # コードナビゲーション
+  code_navigation:
+    jump_to_definition: true
+    find_references: true
+    show_type_info: true
+    show_documentation: true
+  
+  # インタラクション
+  interaction:
+    style: "conversational"
+    detail_level: "high"
+    code_focused: true
+    proactive_suggestions: true
+
+# Cursor固有の機能設定
+features:
+  # コード補完
+  code_completion:
+    enabled: true
+    max_tokens: 100
+    temperature: 0.3
+    include_comments: true
+    trigger_characters: ["."]
+  
+  # リファクタリング
+  refactoring:
+    enabled: true
+    suggest_extractions: true
+    suggest_renaming: true
+    suggest_pattern_application: true
+  
+  # コード生成
+  code_generation:
+    enabled: true
+    test_generation: true
+    documentation_generation: true
+    implementation_generation: true
+  
+  # プロジェクト分析
+  project_analysis:
+    enabled: true
+    structure_visualization: true
+    dependency_analysis: true
+    complexity_analysis: true
+
+# Cursor固有の制約
+constraints:
+  # 変更制約
+  modification:
+    max_files_per_operation: 10
+    max_changes_per_file: 50
+    require_explanation: true
+  
+  # 生成制約
+  generation:
+    max_generated_lines: 200
+    require_tests: true
+    enforce_style_guidelines: true
+  
+  # セキュリティ制約
+  security:
+    prevent_vulnerable_patterns: true
+    check_sensitive_data_access: true
+    validate_input_handling: true    

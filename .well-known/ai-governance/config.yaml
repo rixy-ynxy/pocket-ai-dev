@@ -1,0 +1,39 @@
+# AIガバナンス共通設定
+version: "1.0"
+
+# 基本設定
+settings:
+  enabled: true
+  mode: "balanced"  # strict, balanced, flexible
+  require_explanations: true
+
+# 対応するAIエージェント
+supported_agents:
+  - name: "cursor"
+    version: ">=1.0.0"
+    config_path: "agents/cursor.yaml"
+  - name: "windsurf"
+    version: ">=1.0.0"
+    config_path: "agents/windsurf.yaml"
+
+# 共通ガバナンスルール
+governance:
+  code_modification:
+    allow_deletion: false
+    require_approval: true
+    max_changes_per_request: 50
+  
+  sensitive_paths:
+    protected:
+      - "**/*.env"
+      - "**/secrets/*"
+      - "**/config/credentials/*"
+    restricted:
+      - "**/security/*"
+      - "**/auth/*"
+
+# 監査設定
+audit:
+  enabled: true
+  log_level: "info"  # debug, info, warn, error
+  retention_days: 30 

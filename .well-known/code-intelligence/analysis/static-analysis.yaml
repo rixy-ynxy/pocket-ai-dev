@@ -1,0 +1,97 @@
+# 静的コード分析のための設定
+version: "1.0"
+
+# 分析スコープ
+analysis_scope:
+  include:
+    - "**/*.ts"
+    - "**/*.tsx"
+    - "**/*.js"
+    - "**/*.jsx"
+    - "**/*.java"
+    - "**/*.kt"
+    - "**/*.swift"
+    - "**/*.go"
+    - "**/*.py"
+  exclude:
+    - "**/node_modules/**"
+    - "**/dist/**"
+    - "**/build/**"
+    - "**/*.test.*"
+    - "**/*.spec.*"
+
+# 分析ルール
+analysis_rules:
+  # コード構造分析
+  structure_analysis:
+    class_analysis:
+      enabled: true
+      max_methods: 20
+      max_fields: 15
+      max_inheritance_depth: 3
+    
+    method_analysis:
+      enabled: true
+      max_length: 30
+      max_parameters: 5
+      max_complexity: 10
+    
+    file_analysis:
+      enabled: true
+      max_length: 500
+      max_imports: 20
+  
+  # 依存関係分析
+  dependency_analysis:
+    circular_dependencies:
+      enabled: true
+      severity: "error"
+    
+    layer_violations:
+      enabled: true
+      severity: "error"
+      rules:
+        - "domain層は他の層に依存してはならない"
+        - "application層はdomain層のみに依存可能"
+        - "interface層はapplication層とdomain層のみに依存可能"
+        - "infrastructure層はinterface層、application層、domain層に依存可能"
+    
+    external_dependencies:
+      enabled: true
+      approved_dependencies: []
+      forbidden_dependencies: []
+
+# 分析結果のフォーマット
+result_format:
+  include_line_numbers: true
+  include_source_snippet: true
+  include_severity: true
+  include_rule_reference: true
+  include_remediation_advice: true
+
+# 分析パターン検出
+pattern_detection:
+  design_patterns:
+    factory:
+      enabled: true
+      pattern: "class.*Factory|.*createInstance|.*getInstance"
+    
+    repository:
+      enabled: true
+      pattern: "class.*Repository|interface.*Repository"
+    
+    service:
+      enabled: true
+      pattern: "class.*Service|interface.*Service"
+  
+  anti_patterns:
+    god_class:
+      enabled: true
+      metrics:
+        - "methods > 20"
+        - "complexity > 50"
+        - "dependencies > 15"
+    
+    feature_envy:
+      enabled: true
+      description: "メソッドが他のクラスのプロパティやメソッドに過度に依存している" 

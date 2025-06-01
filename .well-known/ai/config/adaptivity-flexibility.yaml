@@ -1,0 +1,67 @@
+# @version[1.0.0]
+# @owner[ai-team]
+# @lastUpdated[2025-03-24]
+# @purpose[agent-flexibility-configuration]
+# @category[configuration]
+# @status[active]
+# @schema[https://yunixy.co.jp/schemas/adaptivity-schema.json]
+# yaml-language-server: $schema=https://yunixy.co.jp/schemas/adaptivity-schema.json
+
+# AIエージェントの柔軟性レベル設定
+version: "1.0"
+
+# デフォルト柔軟性レベル
+default_level: "medium"  # low, medium, high
+
+# 領域ごとの柔軟性レベル
+domain_flexibility:
+  # ビジネスドメイン層は比較的厳格に
+  domain:
+    level: "low"
+    reason: "ビジネスロジックは一貫性が重要"
+    
+  # アプリケーション層は中程度の柔軟性
+  application:
+    level: "medium"
+    reason: "ユースケース実装は一定の自由度を許容"
+    
+  # インターフェース層は柔軟に
+  interface:
+    level: "high"
+    reason: "UIやAPIは実装の多様性を許容"
+    
+  # インフラ層は中程度の柔軟性
+  infrastructure:
+    level: "medium"
+    reason: "技術選定に一定の自由度を許容"
+
+# パターンベースの柔軟性設定
+pattern_flexibility:
+  - pattern: "**/domain/models/**"
+    level: "low"
+    reason: "ドメインモデルは厳格な設計が必要"
+    
+  - pattern: "**/ui/components/**"
+    level: "high"
+    reason: "UIコンポーネントは創造的な設計を許容"
+    
+  - pattern: "**/infrastructure/adapters/**"
+    level: "medium"
+    reason: "外部システム連携は状況に応じた実装を許容"
+
+# コンテキスト依存の柔軟性
+context_flexibility:
+  # 新機能開発時は柔軟に
+  - context: "feature_development"
+    level: "high"
+    reason: "新機能は創造的な設計を促進"
+    
+  # バグ修正時は厳格に
+  - context: "bug_fixing"
+    level: "low"
+    reason: "バグ修正は最小限の変更を推奨"
+    
+  # リファクタリング時は中程度の柔軟性
+  - context: "refactoring"
+    level: "medium"
+    reason: "リファクタリングは品質向上と設計改善のバランスを重視"    

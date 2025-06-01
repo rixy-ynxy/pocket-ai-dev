@@ -1,0 +1,430 @@
+---
+# トラブルシューティング ナレッジベース
+# 実用的なAIアプリケーション開発で実証された問題解決方法集
+
+knowledge_base_info:
+  name: "troubleshooting-knowledge-base"
+  version: "1.0.0"
+  last_updated: "2025-05-24"
+  validation_status: "production_verified"
+  success_rate: "高い解決実績"
+
+categories:
+  
+  # Pydantic・依存関係の問題
+  pydantic_dependency_issues:
+    
+    pydantic_v2_inheritance_conflict:
+      issue_id: "PYD001"
+      severity: "critical"
+      category: "dependency_conflict"
+      
+      problem:
+        description: "Google ADK Agent継承によるPydantic v2バリデーションエラー"
+        error_message: "AttributeError: 'NoneType' object has no attribute 'model_validate'"
+        impact: "バックエンドサーバー起動完全停止"
+        affected_components:
+          - "MultiAgentCoordinator"
+          - "EmotionalSupportAgent"
+          - "CareerAdviceAgent"
+          - "RelationshipCounselingAgent"
+      
+      root_cause:
+        primary: "外部ライブラリ継承による密結合"
+        technical_details:
+          - "Google ADK Agentクラスの内部実装依存"
+          - "Pydantic v2バリデーション機構との競合"
+          - "継承チェーンによる複雑な依存関係"
+        dependency_analysis:
+          - "google-adk: 内部実装への依存"
+          - "pydantic v2: バリデーション仕様変更"
+          - "継承: 密結合によるリスク増大"
+      
+      solution:
+        approach: "継承からコンポジションへの設計変更"
+        implementation_steps:
+          1: "Google ADK Agent継承の完全削除"
+          2: "独立クラスとしての再設計"
+          3: "コンポジションパターン適用"
+          4: "エージェントインスタンス集約管理"
+          5: "インターフェース統一化"
+        
+        code_changes:
+          before: |
+            class MultiAgentCoordinator(Agent):
+                def __init__(self):
+                    super().__init__(...)  # 継承による密結合
+          
+          after: |
+            class MultiAgentCoordinator:
+                def __init__(self):
+                    # コンポジション採用
+                    self.consultation_agent = ChatConsultationAgent()
+                    self.specialized_agents = {
+                        "emotional_support": EmotionalSupportAgent(),
+                        # ... 他のエージェント
+                    }
+        
+        validation:
+          - "バックエンドサーバー正常起動確認"
+          - "全エージェント動作確認"
+          - "Pydantic v2バリデーション成功"
+          - "37件テスト全合格"
+      
+      prevention:
+        design_principles:
+          - "外部ライブラリ依存性最小化"
+          - "継承よりコンポジション選択"
+          - "インターフェース分離原則適用"
+          - "依存性逆転原則実践"
+        
+        monitoring:
+          - "依存関係バージョン固定"
+          - "外部ライブラリ更新時の影響範囲確認"
+          - "継続的統合テスト実施"
+      
+      lessons_learned:
+        - "Clean Architecture原則の実践重要性"
+        - "外部依存性設計時の慎重さ必要性"
+        - "継承使用時のリスク評価重要性"
+        - "コンポジション設計の優位性"
+
+  # A2A SDK統合問題
+  a2a_integration_issues:
+    
+    llm_echo_response_problem:
+      issue_id: "A2A001"
+      severity: "high"
+      category: "integration_compatibility"
+      
+      problem:
+        description: "A2A SDK互換性によるエコー応答問題"
+        symptoms:
+          - "LLM応答が意図した形式にならない"
+          - "メタデータの不適切な処理"
+          - "型定義と実装の不一致"
+        impact: "実用的なAIチャット機能の阻害"
+      
+      root_cause:
+        primary: "A2A SDK型定義と実装の齟齬"
+        technical_details:
+          - "メタデータ処理の不適切な実装"
+          - "SDK仕様理解の不足"
+          - "型安全性の確保不十分"
+      
+      solution:
+        approach: "メタデータ活用と型定義修正"
+        implementation_steps:
+          1: "A2A SDK仕様詳細調査"
+          2: "メタデータ処理ロジック修正"
+          3: "型定義の正確性確保"
+          4: "テストケース拡充"
+        
+        result: "実用的AIチャット機能実現"
+        validation:
+          - "AI応答品質確認"
+          - "メタデータ適切処理確認"
+          - "型安全性確保確認"
+      
+      prevention:
+        - "SDK統合前の詳細仕様確認"
+        - "型定義の厳密な検証"
+        - "統合テストの包括的実施"
+
+  # フロントエンド・レンダリング問題
+  frontend_rendering_issues:
+    
+    ssr_markdown_error:
+      issue_id: "FE001"
+      severity: "medium"
+      category: "ssr_compatibility"
+      
+      problem:
+        description: "サーバーサイドレンダリングでのMarkdownレンダリングエラー"
+        error_message: "ReferenceError: window is not defined"
+        impact: "Markdownコンテンツ表示不可"
+        affected_components:
+          - "react-markdown"
+          - "rehype-highlight"
+          - "syntax-highlighter"
+      
+      root_cause:
+        primary: "ブラウザ専用ライブラリのSSR実行"
+        technical_details:
+          - "window オブジェクトへの依存"
+          - "サーバー・クライアント環境差異"
+          - "動的インポートの不使用"
+      
+      solution:
+        approach: "動的ライブラリロード実装"
+        implementation_steps:
+          1: "useEffect内での動的インポート"
+          2: "クライアントサイドでのライブラリロード"
+          3: "ローディング状態管理"
+          4: "エラーハンドリング実装"
+        
+        code_example: |
+          useEffect(() => {
+            const loadHighlighter = async () => {
+              const { PrismLight } = await import('react-syntax-highlighter');
+              setHighlighter(PrismLight);
+            };
+            loadHighlighter();
+          }, []);
+        
+        result: "Markdownレンダリング機能完成"
+      
+      prevention:
+        - "SSR対応ライブラリ選択"
+        - "動的インポート標準使用"
+        - "環境差異事前確認"
+
+  # データベース・マイグレーション問題
+  database_migration_issues:
+    
+    sqlalchemy_metadata_conflict:
+      issue_id: "DB001"
+      severity: "medium"
+      category: "database_schema"
+      
+      problem:
+        description: "SQLAlchemy metadata予約語競合"
+        symptoms:
+          - "マイグレーション実行失敗"
+          - "テーブル作成エラー"
+          - "スキーマ定義競合"
+      
+      solution:
+        approach: "予約語回避とスキーマ最適化"
+        implementation:
+          - "予約語使用回避"
+          - "明示的カラム名指定"
+          - "マイグレーション手順最適化"
+        
+        result: "データベース基盤安定化"
+
+  # テスト・品質保証問題
+  testing_quality_issues:
+    
+    jest_configuration_error:
+      issue_id: "TEST001"
+      severity: "medium"
+      category: "test_environment"
+      
+      problem:
+        description: "Jest設定による型・モジュール解決問題"
+        symptoms:
+          - "テスト実行失敗"
+          - "型定義認識エラー"
+          - "モジュールインポートエラー"
+      
+      solution:
+        approach: "Jest設定最適化"
+        implementation:
+          - "TypeScript設定統合"
+          - "モジュール解決パス設定"
+          - "テスト環境分離"
+        
+        result: "テスト基盤安定化"
+
+# 問題解決フレームワーク
+problem_solving_framework:
+  
+  systematic_approach:
+    phase_1_observation:
+      description: "現象の正確な把握"
+      activities:
+        - "エラーメッセージ詳細記録"
+        - "再現手順特定"
+        - "影響範囲調査"
+        - "ログ・スタックトレース分析"
+      
+      tools:
+        - "ブラウザ開発者ツール"
+        - "サーバーログ確認"
+        - "デバッガー活用"
+        - "ネットワーク通信監視"
+    
+    phase_2_analysis:
+      description: "根本原因の特定"
+      activities:
+        - "依存関係分析"
+        - "コードパス追跡"
+        - "設定値確認"
+        - "環境差異調査"
+      
+      analysis_methods:
+        - "分割統治: 問題の分解"
+        - "仮説検証: 原因候補の検証"
+        - "差分分析: 動作環境比較"
+        - "依存性追跡: ライブラリ影響調査"
+    
+    phase_3_solution:
+      description: "段階的対応実施"
+      activities:
+        - "解決策設計"
+        - "影響範囲評価"
+        - "段階的実装"
+        - "検証・テスト"
+      
+      implementation_principles:
+        - "最小変更原則"
+        - "可逆性確保"
+        - "段階的適用"
+        - "継続的検証"
+    
+    phase_4_validation:
+      description: "最終確認・予防"
+      activities:
+        - "全体動作確認"
+        - "リグレッションテスト"
+        - "文書化・共有"
+        - "予防策実装"
+
+  # 診断ツール・手法
+  diagnostic_tools:
+    
+    backend_diagnosis:
+      log_analysis:
+        - "uvicorn ログ確認"
+        - "FastAPI デバッグモード"
+        - "Python traceback分析"
+        - "データベースクエリログ"
+      
+      debugging_commands:
+        - "python -m app.main"
+        - "uvicorn app.main:app --reload --log-level debug"
+        - "pytest -v --tb=long"
+        - "python -c 'import module; print(module.__version__)'"
+    
+    frontend_diagnosis:
+      browser_tools:
+        - "Chrome DevTools Console"
+        - "Network タブ通信確認"
+        - "React Developer Tools"
+        - "TypeScript コンパイルエラー"
+      
+      debugging_commands:
+        - "npm run dev"
+        - "npm run build"
+        - "npm run type-check"
+        - "npm run lint"
+    
+    integration_diagnosis:
+      api_testing:
+        - "curl コマンド直接確認"
+        - "Postman API テスト"
+        - "Swagger UI動作確認"
+        - "WebSocket接続確認"
+
+# 予防策・ベストプラクティス
+prevention_strategies:
+  
+  proactive_measures:
+    dependency_management:
+      - "バージョン固定 (package.json, requirements.txt)"
+      - "定期的依存関係更新・テスト"
+      - "セキュリティ脆弱性監視"
+      - "互換性事前確認"
+    
+    code_quality:
+      - "型安全性徹底 (TypeScript, Python型ヒント)"
+      - "静的解析活用 (ESLint, mypy)"
+      - "コードレビュー実施"
+      - "テスト駆動開発"
+    
+    testing_strategy:
+      - "包括的テストスイート維持"
+      - "CI/CD 自動テスト実行"
+      - "リグレッションテスト継続"
+      - "パフォーマンステスト定期実施"
+    
+    monitoring_alerting:
+      - "エラー率監視"
+      - "パフォーマンス監視"
+      - "リソース使用量監視"
+      - "アプリケーションログ監視"
+
+  # 環境別対策
+  environment_specific:
+    development:
+      - "ホットリロード活用"
+      - "詳細ログ出力"
+      - "デバッグモード使用"
+      - "ローカルテストデータ準備"
+    
+    staging:
+      - "本番相当データ使用"
+      - "パフォーマンステスト実施"
+      - "セキュリティテスト実行"
+      - "統合テスト包括実施"
+    
+    production:
+      - "監視・アラート設定"
+      - "自動復旧機構"
+      - "バックアップ・復旧手順"
+      - "インシデント対応計画"
+
+# 成功指標・メトリクス
+success_metrics:
+  
+  resolution_efficiency:
+    time_to_resolution:
+      - "critical: 1時間以内"
+      - "high: 4時間以内"
+      - "medium: 1日以内"
+      - "low: 1週間以内"
+    
+    resolution_rate:
+      - "first_time_fix: 90%以上"
+      - "escalation_rate: 5%以下"
+      - "recurrence_rate: 2%以下"
+    
+    knowledge_retention:
+      - "文書化率: 100%"
+      - "知識共有実施率: 100%"
+      - "予防策実装率: 90%以上"
+
+  # 品質向上指標
+  quality_improvement:
+    incident_reduction:
+      - "月次インシデント数削減"
+      - "重複問題発生防止"
+      - "予防策効果測定"
+    
+    team_capability:
+      - "問題解決スキル向上"
+      - "診断時間短縮"
+      - "解決品質向上"
+
+# ナレッジ管理・更新
+knowledge_management:
+  
+  documentation_standards:
+    incident_record:
+      required_fields:
+        - "問題概要・症状"
+        - "根本原因分析"
+        - "解決手順詳細"
+        - "検証方法"
+        - "予防策"
+        - "学習事項"
+    
+    solution_validation:
+      - "実装前テスト"
+      - "本番環境検証"
+      - "副作用確認"
+      - "パフォーマンス影響評価"
+  
+  continuous_improvement:
+    knowledge_updates:
+      - "新技術・ツール情報追加"
+      - "解決パターン拡充"
+      - "予防策効果検証"
+      - "ベストプラクティス更新"
+    
+    team_sharing:
+      - "定期的知識共有会"
+      - "技術的学習事項共有"
+      - "問題解決手法改善"
+      - "ツール・手法評価" 

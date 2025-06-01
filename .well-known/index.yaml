@@ -1,0 +1,47 @@
+# .well-known/standards ディレクトリインデックス
+# AIエージェントのためのナビゲーション情報
+
+directory: "standards"
+purpose: "開発標準とベストプラクティス"
+last_updated: "2025-03-23"
+
+subdirectories:
+  - name: "code"
+    purpose: "言語・技術別のコーディング規約"
+    key_files:
+      - "javascript.md"
+      - "typescript.md"
+      - "python.md"
+      - "java.md"
+  - name: "architecture"
+    purpose: "アーキテクチャパターンと原則"
+    key_files:
+      - "clean-arch-domain.md"
+      - "clean-arch-patterns.md"
+      - "components-clean-arch.md"
+  - name: "testing"
+    purpose: "テスト戦略と方法論"
+    key_files:
+      - "tdd-examples.md"
+      - "tdd-workflows.md"
+  - name: "ui"
+    purpose: "UI/UX設計ガイドライン"
+    key_files:
+      - "components-layout-patterns.md"
+      - "guidelines-enterprise-architecture.md"
+  - name: "infrastructure"
+    purpose: "インフラストラクチャのベストプラクティス"
+    key_files:
+      - "cloud-deployment.md"
+      - "container-orchestration.md"
+
+related_directories:
+  - path: "/templates"
+    purpose: "テンプレートの参照"
+  - path: "/workflows"
+    purpose: "ワークフローの参照"
+
+usage_tips:
+  - "コード規約は言語ごとに参照すること"
+  - "アーキテクチャパターンは一貫して適用すること"
+  - "テスト戦略はプロジェクト全体で統一すること"

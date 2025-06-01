@@ -1,0 +1,80 @@
+# @version[1.0.0]
+# @owner[ai-team]
+# @lastUpdated[2025-03-24]
+# @purpose[implementation-facts-verification]
+# @category[configuration]
+# @status[active]
+# @schema[https://yunixy.co.jp/schemas/implementation-facts-schema.json]
+# yaml-language-server: $schema=https://yunixy.co.jp/schemas/implementation-facts-schema.json
+
+# 実装事実の検証と活用のためのルール
+version: "1.0"
+
+# 実装事実の種類
+fact_types:
+  # コード構造の事実
+  structural_facts:
+    description: "コードベースの構造に関する事実"
+    examples:
+      - "ファイル/ディレクトリ構造"
+      - "モジュール間の依存関係"
+      - "インターフェース定義"
+      - "クラス/関数の定義と関係"
+    verification_approach: "静的解析とパターンマッチング"
+  
+  # 実装パターンの事実
+  pattern_facts:
+    description: "コードベースで使用されている実装パターン"
+    examples:
+      - "アーキテクチャパターン（MVC、Clean Architecture等）"
+      - "設計パターン（Factory、Singleton等）"
+      - "コード構成パターン（モジュール分割、ファイル構成）"
+    verification_approach: "パターン認識アルゴリズムとヒューリスティック"
+  
+  # ライブラリ/フレームワーク使用の事実
+  library_facts:
+    description: "使用しているライブラリやフレームワーク"
+    examples:
+      - "依存ライブラリ"
+      - "バージョン情報"
+      - "ライブラリの使用方法と頻度"
+    verification_approach: "依存関係分析とインポート文解析"
+
+# 事実検証ルール
+fact_verification:
+  # 検証の優先順位
+  priorities:
+    high:
+      - "アーキテクチャ原則の遵守"
+      - "ドメインモデルの整合性"
+      - "コーディング標準への準拠"
+    medium:
+      - "命名規則の一貫性"
+      - "コメントの質と量"
+      - "テストカバレッジ"
+    low:
+      - "ドキュメントの整合性"
+      - "ログ出力の一貫性"
+  
+  # 検証条件
+  conditions:
+    - "複数のソースファイルからの証拠で裏付けられていること"
+    - "パターンが一貫して適用されていること"
+    - "例外がある場合は明確な理由が存在すること"
+
+# 事実推論ルール
+fact_inference:
+  # 推論プロセス
+  process:
+    - "複数のソースから事実を収集"
+    - "事実間の関連性を分析"
+    - "パターンと例外を識別"
+    - "実装意図を推論"
+    - "一般化可能なルールを抽出"
+  
+  # 推論の制約
+  constraints:
+    - "推論は観察された事実に忠実であること"
+    - "統計的に有意義なサンプルに基づいていること"
+    - "例外を過剰に一般化しないこと"
+    - "主観的解釈を最小限にすること"    

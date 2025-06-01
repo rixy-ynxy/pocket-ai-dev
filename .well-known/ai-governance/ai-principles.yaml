@@ -1,0 +1,229 @@
+# AI Agent Behavior Principles
+# Version: 1.0.0
+# Last Updated: 2024-03-20
+
+# メタデータ
+metadata:
+  purpose: AI Agent Behavior Principles
+  last_updated: 2024-03-20
+  version_control:
+    strategy: semantic_versioning
+    update_frequency: on_principle_change
+    changelog_required: true
+    compatibility:
+      backward_compatible: true
+      minimum_version: 1.0.0
+
+  conflict_resolution:
+    strategy: highest_priority_wins
+    rules:
+      - when: version_conflict
+        action: use_latest_version
+      - when: setting_conflict
+        action: use_highest_priority
+      - when: validation_failure
+        action: fallback_to_safe_defaults
+
+  validation_mechanism:
+    checkpoints:
+      constraints_understood:
+        method: automated_test
+        criteria:
+          - file_access_patterns_applied
+          - modification_rules_followed
+        recovery:
+          on_failure: retry_with_logging
+          max_retries: 3
+      
+      settings_applied:
+        method: configuration_verification
+        criteria:
+          - all_required_settings_present
+          - no_invalid_combinations
+        recovery:
+          on_failure: use_safe_defaults
+          alert_level: high
+
+      principles_followed:
+        method: behavior_analysis
+        criteria:
+          - interaction_patterns_correct
+          - decision_making_aligned
+        recovery:
+          on_failure: request_human_review
+          alert_level: critical
+
+  reference_resolution:
+    strategy: hierarchical
+    rules:
+      - source: .cursorrules
+        override_allowed: false
+        reference_method: direct_import
+      - source: .cursor/settings.json
+        override_allowed: true
+        reference_method: dynamic_lookup
+    variables:
+      - name: ${max_files_per_change}
+        source: .cursorrules
+        default: 10
+      - name: ${safety_mode}
+        source: .cursorrules
+        default: strict
+
+  hierarchy:
+    level: 1
+    dependencies:
+      - file: .cursorrules
+        priority: highest
+        purpose: basic_constraints
+      - file: .cursor/settings.json
+        priority: high
+        purpose: ide_specific
+    references:
+      - path: 00-principle/ai-rules
+        purpose: detailed_guidance
+        type: human_readable
+
+  learning_path:
+    order:
+      1: .cursorrules              # 基本制約の理解
+      2: .cursor/settings.json     # IDE固有設定の適用
+      3: ai-principles.yaml        # 動作原則の遵守
+      4: 00-principle/ai-rules     # 詳細ガイドの参照
+    validation:
+      checkpoints:
+        - constraints_understood    # 制約の理解確認
+        - settings_applied         # 設定の適用確認
+        - principles_followed      # 原則の遵守確認
+      requirements:
+        - type: sequential         # 順序に従った学習
+        - type: cumulative        # 累積的な知識の構築
+        - type: validated         # 各段階での検証
+
+# 基本原則
+principles:
+  core:
+    # ファイルアクセスとコード変更の安全性設定
+    safety:
+      # ファイルアクセス制御
+      file_access:
+        mode: restrictive
+        patterns:
+          # すべてのファイルタイプへの基本的なアクセスを許可
+          allowed: 
+            - "*.*"
+          # 機密情報やシステムファイルへのアクセスを制限
+          forbidden:
+            # 機密情報
+            - "*.env*"
+            - "*.key*"
+            - "*secret*"
+            - "*password*"
+            - "*.pem"
+            - "*.crt"
+            - "*.cer"
+            - "*.p12"
+            - "*.pfx"
+            - "*credential*"
+            - "*token*"
+            - "*api_key*"
+            
+            # システムファイル
+            - ".git/*"
+            - ".env*"
+            - "node_modules/*"
+            
+            # 一時ファイル/ビルド成果物
+            - "*.log"
+            - "*.tmp"
+            - "dist/*"
+            - "build/*"
+            
+            # バックアップファイル
+            - "*.bak"
+            - "*.backup"
+            - "*~"
+
+      # コード変更の制御
+      code_modification:
+        mode: additive_only
+        rules:
+          - 既存コードの削除は禁止
+          - 変更は追加のみ許可
+          - リファクタリングは要承認
+        review:
+          required: true
+          type: human_review
+          minReviewers: 1
+
+    # AIエージェントの動作特性
+    behavior:
+      # ユーザーとの対話モード
+      interaction:
+        mode: collaborative
+        rules:
+          - 明確な説明の提供
+          - 変更前の確認
+          - エラー時の詳細な報告
+
+      # 意思決定プロセス
+      decision_making:
+        mode: conservative
+        rules:
+          - 安全性を優先
+          - 不確実な場合は確認
+          - 段階的な変更の適用
+
+  # エラー処理の設定
+  error_handling:
+    # エラーの重要度に応じた対応
+    severity_levels:
+      critical:
+        action: immediate_stop
+        notification: true
+        human_review: true
+      high:
+        action: pause_and_notify
+        notification: true
+      medium:
+        action: log_and_continue
+        notification: false
+
+    # エラーからの回復プロセス
+    recovery:
+      steps:
+        - error_detection
+        - impact_analysis
+        - correction_planning
+        - implementation
+        - verification
+      documentation_required: true
+
+# 検証基準
+validation:
+  # コード変更の検証要件
+  code_changes:
+    requirements:
+      - 変更の目的が明確であること
+      - 既存機能を破壊しないこと
+      - テスト可能であること
+    review_points:
+      - 安全性
+      - 影響範囲
+      - 可読性
+
+  # 品質指標
+  metrics:
+    # 安全性の指標
+    safety:
+      threshold: 1.0
+      measures:
+        - no_sensitive_data
+        - no_system_risk
+    
+    # コード品質の指標
+    quality:
+      threshold: 0.95
+      measures:
+        - code_style
+        - test_coverage 

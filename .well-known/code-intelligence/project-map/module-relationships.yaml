@@ -1,0 +1,116 @@
+# プロジェクトのモジュール関係マッピング
+version: "1.0"
+
+# モジュール定義とグループ化
+modules:
+  # ドメイン層モジュール
+  domain:
+    description: "ビジネスロジックとドメインモデルを含むモジュール"
+    path_patterns:
+      - "**/domain/**"
+      - "**/entities/**"
+      - "**/models/**"
+    responsibilities:
+      - "ビジネスエンティティの表現"
+      - "ビジネスルールの実装"
+      - "ドメインサービスの提供"
+    dependencies:
+      allowed: []
+      forbidden:
+        - "application"
+        - "interface"
+        - "infrastructure"
+  
+  # アプリケーション層モジュール
+  application:
+    description: "ユースケースとアプリケーションロジックを含むモジュール"
+    path_patterns:
+      - "**/application/**"
+      - "**/usecases/**"
+      - "**/services/**"
+    responsibilities:
+      - "ユースケースの実装"
+      - "ドメインモデルのオーケストレーション"
+      - "アプリケーション固有のサービス提供"
+    dependencies:
+      allowed:
+        - "domain"
+      forbidden:
+        - "interface"
+        - "infrastructure"
+  
+  # インターフェース層モジュール
+  interface:
+    description: "外部とのインターフェースを提供するモジュール"
+    path_patterns:
+      - "**/interfaces/**"
+      - "**/controllers/**"
+      - "**/presenters/**"
+      - "**/views/**"
+    responsibilities:
+      - "外部リクエストの処理"
+      - "データの表示形式への変換"
+      - "ユーザーインターフェースの提供"
+    dependencies:
+      allowed:
+        - "domain"
+        - "application"
+      forbidden:
+        - "infrastructure"
+  
+  # インフラストラクチャ層モジュール
+  infrastructure:
+    description: "技術的な実装の詳細を含むモジュール"
+    path_patterns:
+      - "**/infrastructure/**"
+      - "**/repositories/impl/**"
+      - "**/adapters/**"
+      - "**/persistence/**"
+    responsibilities:
+      - "データの永続化"
+      - "外部サービスとの統合"
+      - "技術的な実装の詳細"
+    dependencies:
+      allowed:
+        - "domain"
+        - "application"
+        - "interface"
+      forbidden: []
+
+# モジュール間関係
+relationships:
+  # 依存方向の定義
+  dependency_directions:
+    - from: "interface"
+      to: "application"
+      type: "uses"
+      description: "インターフェース層はアプリケーション層のユースケースを利用"
+    
+    - from: "application"
+      to: "domain"
+      type: "uses"
+      description: "アプリケーション層はドメイン層のモデルとサービスを利用"
+    
+    - from: "infrastructure"
+      to: "domain"
+      type: "implements"
+      description: "インフラストラクチャ層はドメイン層のリポジトリインターフェースを実装"
+    
+    - from: "infrastructure"
+      to: "application"
+      type: "supports"
+      description: "インフラストラクチャ層はアプリケーション層のサービスをサポート"
+  
+  # 禁止されている依存関係
+  forbidden_dependencies:
+    - from: "domain"
+      to: "*"
+      reason: "ドメイン層は他の層に依存してはならない"
+    
+    - from: "application"
+      to: ["interface", "infrastructure"]
+      reason: "アプリケーション層はインターフェース層とインフラストラクチャ層に依存してはならない"
+    
+    - from: "interface"
+      to: "infrastructure"
+      reason: "インターフェース層はインフラストラクチャ層に直接依存してはならない" 

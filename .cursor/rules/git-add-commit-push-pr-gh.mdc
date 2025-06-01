@@ -1,0 +1,109 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+\
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# AI設定ファイルの参照
+aiConfig:
+  configPath: "../config/main.yaml"
+  enforceConfig: true
+  validateReferences: true
+
+# ブランチ戦略判定ルール
+```yaml
+branchStrategy:
+  description: "プロジェクトのブランチ戦略を自動判定し、適切なベースブランチを選択する"
+  判定基準:
+    - mainブランチが本番環境に連動している場合: developブランチをベースとする
+    - CI/CDパイプラインでmain → 本番デプロイが設定されている場合: developブランチをベースとする
+    - develop/development ブランチが存在する場合: 開発用ブランチとして使用
+    - 単純なmainブランチ運用の場合: mainブランチをベースとする
+  
+  自動判定方法:
+    1. リモートブランチ一覧を確認 (git branch -r)
+    2. CI/CD設定ファイル (.github/workflows/, .gitlab-ci.yml等) の有無と内容確認
+    3. ブランチ保護設定やデプロイ設定の推測
+    4. 既存のPull Request履歴からパターン分析
+  
+  AI判定指示:
+    - PR作成時、必ず最初にプロジェクトのブランチ戦略を調査すること
+    - 'git branch -r' でリモートブランチ確認
+    - '.github/workflows' ディレクトリ存在確認
+    - 'develop' または 'development' ブランチの存在確認
+    - README.mdやドキュメントでブランチ戦略の記述確認
+    - 最近のPRの履歴パターン分析（可能であれば）
+    - 本番デプロイがmainブランチから行われる形跡があれば develop を選択
+    - 判定が困難な場合はユーザーに確認
+    - 判定理由と根拠をユーザーに明確に報告すること
+```
+# カスタムコマンドの定義
+customCommands:
+  - name: "create_pr_md"
+    description: "新しいブランチを作成し、変更をコミット・プッシュ後、Markdown形式でPull Requestを作成します。AIが自動的にプロジェクトのブランチ戦略を判定し、適切なベースブランチを選択します。"
+    steps:
+      - run: "git checkout -b {{branch_name}}"
+        description: "新しいブランチを作成します。"
+      - run: "git add ."
+        description: "全ての変更をステージングします。"
+      - run: "git commit -m \\"{{commit_message}}\\""
+        description: "コミットメッセージと共にコミットします。"
+      - run: "git push origin {{branch_name}}"
+        description: "ブランチをリモートにプッシュします。"
+      - run: "gh pr create --title \\"{{pr_title}}\\" --body \\"{{pr_body_md}}\\" --base {{base_branch | auto_detect}}"
+        description: "Markdown形式でPull Requestを作成します。ベースブランチは自動判定されます。"
+    placeholders:
+      - name: "branch_name"
+        description: "作成する新しいブランチ名 (例: feature/new-feature)"
+        required: true
+      - name: "commit_message"
+        description: "コミットメッセージ"
+        required: true
+      - name: "pr_title"
+        description: "Pull Requestのタイトル"
+        required: true
+      - name: "pr_body_md"
+        description: "Pull Requestの本文 (Markdown形式)。AIが未コミットの変更点を解析し、その概要、変更理由、変更内容を .github/PULL_REQUEST_TEMPLATE.md の形式に沿って記述してください。"
+        required: true
+        default: |
+          ## 概要 (Overview)
+
+          <!-- このプルリクエストで何を変更しましたか？ -->
+
+          ## 変更理由 (Reason)
+
+          <!-- なぜこの変更が必要でしたか？ JiraチケットやGitHubイシューへのリンクもあれば記載してください。 -->
+          <!-- 例: Fixes #123, Closes #456 -->
+
+          ## 変更内容 (Details)
+
+          <!-- 具体的にどのような変更を加えましたか？ 技術的な詳細やスクリーンショットなど。 -->
+
+          ## テスト方法 (How to Test)
+
+          <!-- この変更をどのようにテスト・確認できますか？ 手順を記載してください。 -->
+
+          ## レビューワーへの特記事項 (Notes for Reviewer)
+
+          <!-- 特にレビューしてほしい点や、注意点などがあれば記載してください。 -->
+
+          ## 関連ドキュメント (Related Documents)
+
+          <!-- 設計書や仕様書など、関連するドキュメントがあればリンクを記載してください。 -->
+
+          ## チェックリスト (Checklist)
+
+          <!-- プルリクエスト提出前に確認する項目 -->
+          - [ ] セルフレビューを実施した
+          - [ ] 関連するドキュメントを更新した (必要な場合)
+          - [ ] E2Eテスト、ユニットテストが通っている (またはテストを追加した)
+          - [ ] (もしあれば) コーディング規約に従っている
+      - name: "base_branch"
+        description: "マージ先のベースブランチ名。AIが自動判定：mainが本番運用の場合はdevelop、シンプル運用の場合はmainを選択。明示的に指定も可能。"
+        required: false
+        default: "auto_detect"

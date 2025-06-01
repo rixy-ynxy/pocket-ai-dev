@@ -1,0 +1,46 @@
+# @version[1.0.0]
+# @owner[ai-team]
+# @lastUpdated[2025-03-24]
+# @purpose[ai-agent-configuration]
+# @category[configuration]
+# @status[active]
+# @schema[https://yunixy.co.jp/schemas/ai-config-schema.json]
+# yaml-language-server: $schema=https://yunixy.co.jp/schemas/ai-config-schema.json
+
+# AIエージェント設定
+agent:
+  # 知識ベースの参照設定
+  knowledge_base:
+    core_paths:
+      - /10-core/11-rdra/      # 要件定義手法
+      - /10-core/12-domain/    # ドメイン設計
+      - /10-core/13-architecture/  # アーキテクチャ
+    
+    project_paths:
+      - /30-projects/*/Specifications/  # プロジェクト固有仕様
+
+  # ファイル分割ルール
+  file_organization:
+    core_knowledge:
+      target: "/10-core/"
+      patterns:
+        - "**/*-patterns.md"
+        - "**/*-principles.yaml"
+        - "**/*-standards.yaml"
+    
+    project_specific:
+      target: "/30-projects/"
+      patterns:
+        - "**/Specifications/*.yaml"
+        - "**/Specifications/*.md"
+
+  # 参照優先順位
+  reference_priority:
+    1: "/10-core/"      # コア知識を最優先
+    2: "/.well-known/"  # 設定ファイル
+    3: "/30-projects/"  # プロジェクト固有情報 
+
+version_control:
+  principle_to_core_mapping:
+    "00-principle/development/patterns.md":
+      - "10-core/12-domain/rules/*_patterns.md"    

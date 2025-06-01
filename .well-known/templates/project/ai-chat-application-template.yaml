@@ -1,0 +1,460 @@
+---
+# AI チャットアプリケーション プロジェクトテンプレート
+# 実用的なAIアプリケーション開発の成功実績を基にしたテンプレート
+
+template_info:
+  name: "ai-chat-application-template"
+  version: "1.0.0"
+  last_updated: "2025-05-24"
+  validation_status: "production_proven"
+  success_metrics: "短期間で基盤完成・実用レベル達成"
+
+project_structure:
+  
+  # モノレポ構成
+  monorepo_layout:
+    root_directories:
+      - "frontend"                    # Next.js フロントエンド
+      - "backend"                     # Python FastAPI バックエンド
+      - "components"                  # 共有UIコンポーネント
+      - "tests"                       # 統合テスト
+      - "docs"                        # プロジェクトドキュメント
+      - ".well-known"                 # 標準・設定
+      - "coverage"                    # テストカバレッジ
+      - "playwright-report"           # E2Eテスト結果
+    
+    configuration_files:
+      - "package.json"                # Node.js 依存関係
+      - "tsconfig.json"               # TypeScript設定
+      - "tailwind.config.js"          # Tailwind CSS設定
+      - "playwright.config.ts"        # E2Eテスト設定
+      - "jest.config.cjs"             # Jest設定
+      - "eslint.config.js"            # ESLint設定
+
+  # フロントエンド構成
+  frontend_structure:
+    framework: "Next.js 14 App Router"
+    language: "TypeScript"
+    styling: "Tailwind CSS"
+    
+    directory_layout:
+      "frontend/app":
+        - "layout.tsx"                # ルートレイアウト
+        - "page.tsx"                  # ホームページ
+        - "chat/"                     # チャット機能
+        - "admin/"                    # 管理機能
+        - "api/"                      # API Routes
+      
+      "frontend/components":
+        - "Chat/"                     # チャットコンポーネント
+        - "Layout/"                   # レイアウトコンポーネント
+        - "Admin/"                    # 管理画面コンポーネント
+      
+      "frontend/lib":
+        - "api-client.ts"             # API通信層
+        - "types.ts"                  # 型定義
+        - "utils.ts"                  # ユーティリティ
+    
+    key_dependencies:
+      ui_libraries:
+        - "@heroicons/react"          # アイコン
+        - "lucide-react"              # アイコン
+        - "@monaco-editor/react"      # コードエディタ
+        - "react-markdown"            # Markdown レンダリング
+      
+      state_management:
+        - "zustand"                   # 状態管理
+      
+      development_tools:
+        - "typescript"                # 型安全性
+        - "eslint"                    # 静的解析
+        - "prettier"                  # フォーマッタ
+
+  # バックエンド構成
+  backend_structure:
+    framework: "FastAPI"
+    language: "Python 3.11+"
+    architecture: "Clean Architecture"
+    
+    directory_layout:
+      "backend/app":
+        - "main.py"                   # アプリケーションエントリポイント
+        - "agents/"                   # AIエージェント
+        - "api/"                      # API エンドポイント
+        - "core/"                     # コア機能
+        - "models/"                   # データモデル
+        - "schemas/"                  # API スキーマ
+        - "services/"                 # ビジネスロジック
+      
+      "backend/tests":
+        - "unit/"                     # ユニットテスト
+        - "integration/"              # 統合テスト
+    
+    key_dependencies:
+      web_framework:
+        - "fastapi"                   # Webフレームワーク
+        - "uvicorn"                   # ASGIサーバー
+        - "pydantic"                  # データバリデーション
+      
+      ai_integration:
+        - "google-generativeai"       # Google Gemini AI
+        - "google-adk"                # Google ADK
+        - "a2a-sdk"                   # A2A通信
+      
+      database:
+        - "sqlalchemy"                # ORM
+        - "alembic"                   # マイグレーション
+        - "psycopg2-binary"           # PostgreSQL
+
+  # テスト構成
+  testing_structure:
+    frameworks:
+      python: "pytest"
+      typescript: "Jest"
+      e2e: "Playwright"
+    
+    test_categories:
+      unit_tests:
+        python: "backend/tests/unit/"
+        typescript: "frontend/__tests__/"
+      
+      integration_tests:
+        api: "backend/tests/integration/"
+        frontend: "tests/integration/"
+      
+      e2e_tests:
+        location: "frontend/e2e/"
+        config: "playwright.config.ts"
+    
+    coverage_targets:
+      backend: "80%以上"
+      frontend: "70%以上"
+      critical_paths: "100%"
+
+# 実装ガイド
+implementation_guide:
+  
+  # セットアップ手順
+  setup_procedure:
+    step_1_environment:
+      description: "開発環境構築"
+      tasks:
+        - "Node.js 18+ インストール"
+        - "Python 3.11+ インストール"
+        - "PostgreSQL インストール"
+        - "Git リポジトリ初期化"
+      
+      validation:
+        - "node --version"
+        - "python --version" 
+        - "psql --version"
+        - "git --version"
+    
+    step_2_dependencies:
+      description: "依存関係インストール"
+      tasks:
+        - "npm install (フロントエンド)"
+        - "pip install -r requirements.txt (バックエンド)"
+        - "Python仮想環境作成・有効化"
+      
+      validation:
+        - "npm run build"
+        - "python -m pytest --version"
+    
+    step_3_configuration:
+      description: "設定ファイル作成"
+      tasks:
+        - ".env ファイル作成"
+        - "Google Cloud Platform設定"
+        - "データベース設定"
+      
+      validation:
+        - "設定値動作確認"
+        - "API接続テスト"
+    
+    step_4_verification:
+      description: "動作確認"
+      tasks:
+        - "バックエンドサーバー起動"
+        - "フロントエンドサーバー起動"
+        - "統合動作確認"
+      
+      validation:
+        - "http://localhost:8000 アクセス"
+        - "http://localhost:3000 アクセス"
+        - "API通信確認"
+
+  # 開発フロー
+  development_workflow:
+    daily_development:
+      morning:
+        - "git pull origin main"
+        - "依存関係更新確認"
+        - "テスト実行"
+        - "開発環境起動"
+      
+      development:
+        - "機能実装"
+        - "ユニットテスト作成"
+        - "統合テスト実行"
+        - "コードレビュー"
+      
+      evening:
+        - "全テスト実行"
+        - "コードコミット"
+        - "プッシュ・CI実行"
+        - "進捗文書化"
+    
+    feature_development:
+      planning:
+        - "要件定義"
+        - "設計検討"
+        - "タスク分割"
+        - "リスク特定"
+      
+      implementation:
+        - "TDD アプローチ"
+        - "段階的実装"
+        - "継続的テスト"
+        - "リファクタリング"
+      
+      completion:
+        - "統合テスト"
+        - "E2Eテスト"
+        - "文書更新"
+        - "デプロイ準備"
+
+  # 品質保証
+  quality_assurance:
+    code_quality:
+      standards:
+        - "TypeScript 型安全性100%"
+        - "ESLint ルール準拠"
+        - "Prettier フォーマット"
+        - "Python型ヒント必須"
+      
+      tools:
+        - "ESLint (静的解析)"
+        - "Prettier (フォーマッタ)"
+        - "mypy (Python型チェック)"
+        - "SonarQube (品質分析)"
+    
+    testing_strategy:
+      approach: "テスト駆動開発 (TDD)"
+      coverage: "80%以上"
+      automation: "CI/CD統合"
+      
+      test_types:
+        - "ユニットテスト: 個別機能"
+        - "統合テスト: システム連携"
+        - "E2Eテスト: ユーザージャーニー"
+        - "パフォーマンステスト: 性能確認"
+
+# 技術スタック詳細
+technology_stack:
+  
+  # フロントエンド技術
+  frontend_technologies:
+    core_framework:
+      nextjs:
+        version: "14.x"
+        features:
+          - "App Router"
+          - "Server Components"
+          - "TypeScript統合"
+        benefits:
+          - "型安全性"
+          - "パフォーマンス"
+          - "開発体験"
+    
+    ui_styling:
+      tailwindcss:
+        version: "3.x"
+        features:
+          - "ユーティリティファースト"
+          - "レスポンシブデザイン"
+          - "カスタマイゼーション"
+        benefits:
+          - "開発速度"
+          - "一貫性"
+          - "保守性"
+    
+    state_management:
+      zustand:
+        features:
+          - "軽量状態管理"
+          - "TypeScript対応"
+          - "ミドルウェア対応"
+        benefits:
+          - "シンプルAPI"
+          - "型安全性"
+          - "パフォーマンス"
+
+  # バックエンド技術
+  backend_technologies:
+    web_framework:
+      fastapi:
+        version: "0.100+"
+        features:
+          - "自動API文書生成"
+          - "Pydantic統合"
+          - "非同期処理"
+        benefits:
+          - "開発速度"
+          - "型安全性"
+          - "パフォーマンス"
+    
+    ai_integration:
+      google_gemini:
+        model: "gemini-2.0-flash"
+        features:
+          - "高品質日本語応答"
+          - "マルチモーダル対応"
+          - "リアルタイム処理"
+        integration:
+          - "Google ADK"
+          - "A2A SDK"
+          - "カスタムエージェント"
+    
+    database:
+      postgresql:
+        version: "14+"
+        features:
+          - "ACID準拠"
+          - "JSON サポート"
+          - "全文検索"
+        orm: "SQLAlchemy 2.0"
+
+  # 通信・統合技術
+  integration_technologies:
+    a2a_protocol:
+      description: "Agent-to-Agent 通信"
+      features:
+        - "JSON-RPC準拠"
+        - "タスク状態管理"
+        - "マルチメディア対応"
+      benefits:
+        - "エージェント間協調"
+        - "拡張性"
+        - "標準化"
+    
+    api_communication:
+      rest_api:
+        - "OpenAPI仕様"
+        - "型安全通信"
+        - "エラーハンドリング"
+      websocket:
+        - "リアルタイム通信"
+        - "双方向通信"
+        - "イベント配信"
+
+# 成功要因と注意点
+success_factors:
+  
+  proven_practices:
+    architecture:
+      - "Clean Architecture適用"
+      - "依存性最小化"
+      - "型安全性徹底"
+      - "テスト駆動開発"
+    
+    development:
+      - "段階的実装"
+      - "継続的統合"
+      - "問題即座解決"
+      - "包括的文書化"
+    
+    quality:
+      - "包括的テスト"
+      - "静的解析活用"
+      - "コードレビュー"
+      - "パフォーマンス監視"
+  
+  common_pitfalls:
+    technical:
+      - "外部ライブラリ過度依存"
+      - "継承の多用"
+      - "型安全性軽視"
+      - "テスト後回し"
+    
+    process:
+      - "要件不明確"
+      - "段階分け不適切"
+      - "リスク軽視"
+      - "文書化不十分"
+  
+  mitigation_strategies:
+    - "Clean Architecture厳格適用"
+    - "包括的テスト実装"
+    - "継続的リファクタリング"
+    - "定期的技術的負債解消"
+
+# 拡張可能性
+extensibility:
+  
+  functional_extensions:
+    ai_capabilities:
+      - "マルチモーダル対応"
+      - "ファインチューニング"
+      - "A/Bテスト機能"
+      - "感情分析統合"
+    
+    system_features:
+      - "認証・認可"
+      - "マルチテナント"
+      - "国際化"
+      - "リアルタイム同期"
+    
+    integration_options:
+      - "外部システム連携"
+      - "API Gateway"
+      - "監視・ログ基盤"
+      - "CI/CD パイプライン"
+  
+  scalability_considerations:
+    infrastructure:
+      - "水平スケーリング"
+      - "ロードバランシング"
+      - "キャッシュ戦略"
+      - "CDN統合"
+    
+    architecture:
+      - "マイクロサービス化"
+      - "イベント駆動アーキテクチャ"
+      - "CQRS実装"
+      - "サーキットブレーカー"
+
+# デプロイメント指針
+deployment_guidelines:
+  
+  environment_setup:
+    development:
+      - "ローカル開発環境"
+      - "ホットリロード"
+      - "デバッグツール"
+      - "テストデータ"
+    
+    staging:
+      - "本番相当環境"
+      - "統合テスト"
+      - "パフォーマンステスト"
+      - "セキュリティテスト"
+    
+    production:
+      - "高可用性構成"
+      - "監視・アラート"
+      - "自動バックアップ"
+      - "災害復旧"
+  
+  deployment_strategy:
+    containerization:
+      - "Docker コンテナ化"
+      - "Kubernetes オーケストレーション"
+      - "イメージ最適化"
+      - "セキュリティスキャン"
+    
+    automation:
+      - "CI/CD パイプライン"
+      - "自動テスト実行"
+      - "ゼロダウンタイムデプロイ"
+      - "ロールバック機能" 

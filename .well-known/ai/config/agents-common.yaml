@@ -1,0 +1,58 @@
+# @version[1.0.0]
+# @owner[ai-team]
+# @lastUpdated[2025-03-24]
+# @purpose[common-agent-configuration]
+# @category[configuration]
+# @status[active]
+# @schema[https://yunixy.co.jp/schemas/common-agent-schema.json]
+# yaml-language-server: $schema=https://yunixy.co.jp/schemas/common-agent-schema.json
+
+# 複数AIエージェント共通設定
+version: "1.0"
+
+# 共通振る舞い設定
+behavior:
+  # コミュニケーションスタイル
+  communication:
+    style: "professional"
+    verbosity: "balanced"
+    explanations: true
+    
+  # 提案スタイル
+  suggestions:
+    creativity_level: "balanced"
+    alternatives_count: 2
+    include_rationale: true
+    
+  # フィードバックスタイル
+  feedback:
+    constructive: true
+    specific: true
+    actionable: true
+
+# 共通制約
+constraints:
+  # コード生成制約
+  code_generation:
+    max_lines_per_function: 50
+    prefer_readability: true
+    include_comments: true
+    
+  # レビュー制約
+  review:
+    check_naming_conventions: true
+    check_error_handling: true
+    check_performance: true
+    
+  # ドキュメント生成制約
+  documentation:
+    include_purpose: true
+    include_usage_examples: true
+    include_limitations: true
+
+# 共通設定変数
+variables:
+  project_type: "web_application"
+  primary_language: "typescript"
+  architecture_style: "clean_architecture"
+  ui_framework: "react"    

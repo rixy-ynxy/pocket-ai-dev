@@ -1,0 +1,87 @@
+# @version[1.0.0]
+# @owner[ai-team]
+# @lastUpdated[2025-03-24]
+# @purpose[windsurf-agent-configuration]
+# @category[configuration]
+# @status[active]
+# @schema[https://yunixy.co.jp/schemas/windsurf-agent-schema.json]
+# yaml-language-server: $schema=https://yunixy.co.jp/schemas/windsurf-agent-schema.json
+
+# Windsurf AIエージェント固有の設定
+version: "1.0"
+
+# Windsurf固有の振る舞い設定
+behavior:
+  # インタラクションスタイル
+  interaction_style:
+    mode: "collaborative"
+    verbosity: "medium"
+    focus_area: "architectural_design"
+    proactive_suggestions: true
+  
+  # 提案スタイル
+  suggestion_style:
+    detail_level: "high"
+    include_alternatives: true
+    show_tradeoffs: true
+    include_implementation_details: true
+  
+  # フィードバックスタイル
+  feedback_style:
+    code_review_focus: "architecture"
+    highlight_patterns: true
+    suggest_improvements: true
+    educational_content: true
+
+# Windsurf固有の機能設定
+features:
+  # アーキテクチャ設計
+  architecture_design:
+    enabled: true
+    diagram_generation: true
+    pattern_recommendation: true
+    architectural_validation: true
+  
+  # モデリング支援
+  modeling:
+    enabled: true
+    domain_model_assistance: true
+    entity_relationship_modeling: true
+    bounded_context_mapping: true
+  
+  # コード構造可視化
+  visualization:
+    enabled: true
+    dependency_graphs: true
+    module_structure: true
+    flow_diagrams: true
+  
+  # リファクタリング提案
+  refactoring:
+    enabled: true
+    architectural_refactoring: true
+    code_organization: true
+    design_pattern_application: true
+
+# Windsurf固有の制約
+constraints:
+  # アーキテクチャ制約
+  architecture:
+    enforce_layering: true
+    enforce_dependency_direction: true
+    prevent_circular_dependencies: true
+    require_interface_separation: true
+  
+  # 設計制約
+  design:
+    enforce_single_responsibility: true
+    enforce_open_closed: true
+    enforce_dependency_inversion: true
+    require_testability: true
+  
+  # ドキュメント制約
+  documentation:
+    require_architecture_documentation: true
+    require_model_documentation: true
+    require_api_documentation: true
+    require_decision_records: true    

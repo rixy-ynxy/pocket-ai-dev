@@ -1,0 +1,106 @@
+# @version[1.0.0]
+# @owner[ai-team]
+# @lastUpdated[2025-03-24]
+# @purpose[planning-constraints-configuration]
+# @category[configuration]
+# @status[active]
+# @schema[https://yunixy.co.jp/schemas/planning-constraints-schema.json]
+# yaml-language-server: $schema=https://yunixy.co.jp/schemas/planning-constraints-schema.json
+
+# AIエージェントの計画立案に関する制約条件
+version: "1.0"
+
+# 計画立案の基本原則
+core_principles:
+  # 実装事実への忠実性
+  implementation_fidelity:
+    description: "既存の実装事実に基づいた計画立案"
+    rules:
+      - "既存のアーキテクチャパターンを尊重する"
+      - "確立されたコーディング規約に従う"
+      - "命名規則の一貫性を維持する"
+      - "モジュール分割の原則を守る"
+    priority: "high"
+  
+  # 変更の最小化
+  change_minimization:
+    description: "必要最小限の変更で目標を達成する計画"
+    rules:
+      - "既存コードの構造的変更を最小限に抑える"
+      - "大規模なリファクタリングは避ける"
+      - "既存のAPIと互換性を保つ"
+      - "段階的な変更アプローチを取る"
+    priority: "medium"
+  
+  # 明確な根拠
+  clear_reasoning:
+    description: "計画の各ステップに明確な根拠を提供"
+    rules:
+      - "各変更提案に具体的な根拠を示す"
+      - "コードの実装事実に基づいた推論を展開する"
+      - "トレードオフを明確に説明する"
+      - "参照したソースコードの場所を明示する"
+    priority: "high"
+
+# 計画立案のプロセス制約
+process_constraints:
+  # 分析フェーズ
+  analysis_phase:
+    required_steps:
+      - "現状のコード構造とパターンの分析"
+      - "変更が必要な範囲の特定"
+      - "依存関係の把握"
+      - "影響範囲の評価"
+    outputs:
+      - "コードベースの現状理解"
+      - "変更の必要性と理由の明確化"
+  
+  # 設計フェーズ
+  design_phase:
+    required_steps:
+      - "複数の解決アプローチの検討"
+      - "各アプローチのトレードオフ分析"
+      - "既存パターンとの整合性評価"
+      - "最適アプローチの選定と根拠"
+    outputs:
+      - "選択したアプローチの詳細"
+      - "既存コードとの統合方法"
+      - "予想される課題と対策"
+  
+  # 実装計画フェーズ
+  implementation_planning_phase:
+    required_steps:
+      - "変更の詳細なステップの定義"
+      - "各ステップの依存関係の明確化"
+      - "検証方法の計画"
+      - "ロールバック戦略の検討"
+    outputs:
+      - "詳細な実装ステップのリスト"
+      - "各ステップの前提条件と期待される結果"
+      - "検証計画"
+
+# 計画検証の基準
+validation_criteria:
+  # アーキテクチャ整合性
+  architectural_integrity:
+    description: "既存のアーキテクチャとの整合性"
+    checks:
+      - "レイヤー間の責任分離が維持されているか"
+      - "依存方向が正しいか"
+      - "インターフェースの安定性が保たれているか"
+  
+  # コード品質
+  code_quality:
+    description: "コード品質の維持または向上"
+    checks:
+      - "複雑度の増加がないか"
+      - "重複が導入されていないか"
+      - "テスト可能性が維持されているか"
+  
+  # ビジネスルール整合性
+  business_rule_integrity:
+    description: "ビジネスルールの整合性維持"
+    checks:
+      - "ビジネスルールの正確な実装"
+      - "ビジネスルールの分散や重複がないか"
+      - "ドメインモデルの純粋性が保たれているか"    

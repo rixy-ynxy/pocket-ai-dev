@@ -1,0 +1,30 @@
+# .well-known/templates ディレクトリインデックス
+# AIエージェントのためのナビゲーション情報
+
+directory: "templates"
+purpose: "再利用可能なテンプレート"
+last_updated: "2025-03-23"
+
+subdirectories:
+  - name: "project"
+    purpose: "プロジェクト構造テンプレート"
+    key_files:
+      - "clean-architecture.md"
+      - "microservices.md"
+  - name: "docs"
+    purpose: "ドキュメントテンプレート"
+    key_files:
+      - "api-documentation.md"
+      - "architecture-decision-record.md"
+      - "requirements-specification.md"
+
+related_directories:
+  - path: "/standards"
+    purpose: "開発標準の参照"
+  - path: "/workflows"
+    purpose: "ワークフローの参照"
+
+usage_tips:
+  - "プロジェクト初期化時にテンプレートを活用すること"
+  - "ドキュメントは一貫したテンプレートを使用すること"
+  - "テンプレートはプロジェクトの要件に合わせてカスタマイズ可能"

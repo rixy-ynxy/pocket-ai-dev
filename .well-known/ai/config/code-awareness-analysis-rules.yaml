@@ -1,0 +1,88 @@
+# @version[1.0.0]
+# @owner[ai-team]
+# @lastUpdated[2025-03-24]
+# @purpose[code-analysis-rules]
+# @category[configuration]
+# @status[active]
+# @schema[https://yunixy.co.jp/schemas/code-analysis-schema.json]
+# yaml-language-server: $schema=https://yunixy.co.jp/schemas/code-analysis-schema.json
+
+# コード分析のためのルール設定
+version: "1.0"
+
+# 基本分析ルール
+basic_analysis:
+  # コード構造分析
+  structure_analysis:
+    enabled: true
+    scope:
+      - "全ファイルタイプ"
+      - "全ディレクトリ"
+    rules:
+      - "ファイル構造と命名に一貫性があるか確認"
+      - "モジュール分割が適切か確認"
+      - "循環依存が存在しないか確認"
+  
+  # パターン分析
+  pattern_analysis:
+    enabled: true
+    patterns_to_identify:
+      - "コアビジネスロジックのパターン"
+      - "データアクセスパターン"
+      - "アーキテクチャ層間の境界"
+      - "クリーンアーキテクチャの実装パターン"
+      - "DDD実装パターン"
+
+# 詳細分析ルール
+detailed_analysis:
+  # 依存関係分析
+  dependency_analysis:
+    enabled: true
+    targets:
+      - "モジュール間依存関係"
+      - "レイヤー間依存関係"
+      - "外部ライブラリ依存関係"
+    verification:
+      - "依存方向が正しいか確認"
+      - "不要な依存がないか確認"
+      - "アーキテクチャルールに準拠しているか確認"
+  
+  # コード品質分析
+  quality_analysis:
+    enabled: true
+    metrics:
+      - "複雑度"
+      - "コードの重複"
+      - "ファイルサイズ"
+      - "関数の長さ"
+    thresholds:
+      complexity_max: 10
+      duplication_max: "5%"
+      file_size_max: 500
+      function_length_max: 30
+
+# コンテキスト認識分析
+contextual_analysis:
+  # アーキテクチャコンテキスト
+  architecture_context:
+    enabled: true
+    rules:
+      - "アーキテクチャ層の遵守を確認"
+      - "層間の責任分離を評価"
+      - "クリーンアーキテクチャ原則の適用を検証"
+  
+  # ドメインコンテキスト
+  domain_context:
+    enabled: true
+    rules:
+      - "ドメインモデルの整合性を確認"
+      - "ユビキタス言語の使用を検証"
+      - "境界づけられたコンテキストの遵守を確認"
+  
+  # ビジネスルールコンテキスト
+  business_rule_context:
+    enabled: true
+    rules:
+      - "ビジネスルールの実装場所が適切か確認"
+      - "ビジネスルールのドメインへのカプセル化を検証"
+      - "ビジネスルールの重複がないか確認"    

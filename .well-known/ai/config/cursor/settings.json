@@ -1,0 +1,67 @@
+{
+  "cursor": {
+    "preset": {
+      "mode": "enterprise",
+      "environment": "development",
+      "security_level": "strict"
+    },
+    "core": {
+      "ui": {
+        "showStatusBar": true
+      },
+      "features": {
+        "enabled": ["chat", "testing", "debugging"]
+      }
+    },
+    "security": {
+      "files": {
+        "access": {
+          "mode": "permissive",
+          "patterns": {
+            "forbidden": [
+              "*.env*",
+              "*.key*",
+              "*secret*",
+              "*password*",
+              "*.pem",
+              "*.crt",
+              "*.p12"
+            ]
+          }
+        }
+      },
+      "code": {
+        "modification": {
+          "mode": "additive_only",
+          "requireApproval": true,
+          "rules": [
+            "no_deletion",
+            "additive_only",
+            "review_required"
+          ]
+        }
+      }
+    },
+    "development": {
+      "workspace": {
+        "root": "/code",
+        "autoSave": false,
+        "formatOnSave": false
+      },
+      "testing": {
+        "enabled": true,
+        "autoRun": true
+      },
+      "debugging": {
+        "enabled": true,
+        "verbose": true
+      }
+    },
+    "ai": {
+      "configPaths": {
+        "custom": [".cursor/rules", ".well-known/ai-governance"],
+        "wellKnown": ".well-known"
+      }
+    }
+  }
+}

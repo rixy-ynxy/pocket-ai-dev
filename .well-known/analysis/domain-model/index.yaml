@@ -1,0 +1,37 @@
+# .well-known/domains ディレクトリインデックス
+# AIエージェントのためのナビゲーション情報
+
+directory: "domains"
+purpose: "ドメイン知識とモデルの定義"
+last_updated: "2025-03-23"
+
+subdirectories:
+  - name: "models"
+    purpose: "ドメインモデルの定義"
+    key_files:
+      - "bounded-contexts.md"
+      - "domain-definitions.md"
+      - "domain-definitions-details.md"
+      - "service-definitions.md"
+      - "ubiquitous-language.md"
+  - name: "rules"
+    purpose: "ドメイン固有のルールとパターン"
+    key_files:
+      - "business-rules.md"
+      - "validation-rules.md"
+  - name: "language"
+    purpose: "ユビキタス言語の定義"
+    key_files:
+      - "glossary.md"
+      - "terminology.md"
+
+related_directories:
+  - path: "/standards"
+    purpose: "開発標準の参照"
+  - path: "/templates"
+    purpose: "テンプレートの参照"
+
+usage_tips:
+  - "ドメインモデルを理解してから実装を行うこと"
+  - "ユビキタス言語を一貫して使用すること"
+  - "境界づけられたコンテキストを尊重すること"

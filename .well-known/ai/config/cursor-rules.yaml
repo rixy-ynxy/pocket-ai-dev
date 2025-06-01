@@ -1,0 +1,53 @@
+# Cursor AI の動作制御設定
+# 変更の制限と安全性確保のための設定
+
+# 1回の変更で扱える最大ファイル数
+maxFilesPerChange: 100
+
+# 安全性とファイル削除の確認
+safeMode: true
+confirmDeletion: true
+
+# AI の動作特性
+behavior:
+  # 慎重なモード
+  cautious: true
+  # 段階的な変更を強制
+  stepByStep: false
+  # 各ステップで確認を要求
+  requireConfirmation: false
+  # 1ステップあたりの最大変更数
+  maxChangesPerStep: 10
+
+# 変更前後の検証プロセス
+validation:
+  # 変更前の検証項目
+  preModification:
+    - codePreservation
+    - deletionDetection
+    - additiveChanges
+  
+  # 変更後の検証項目
+  postModification:
+    - 既存機能の維持確認
+    - テストの継続的実行
+    - ドキュメントの整合性確認
+
+# コード変更に関するルール
+codeModification:
+  # 削除操作の制御
+  deletion:
+    # 削除の基本方針
+    policy: strict
+    # 例外の取り扱い
+    exceptions:
+      allowed: false
+      reviewRequired: true
+      documentationRequired: true
+    requireApproval: true
+
+# AI設定ファイルの参照
+aiConfig:
+  configPath: ".well-known/ai/config/main.yaml"
+  enforceConfig: true
+  validateReferences: true

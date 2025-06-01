@@ -1,0 +1,69 @@
+{
+  "name": "mobile-devin-cursor-bridge",
+  "displayName": "Mobile Devin - Cursor Bridge",
+  "description": "Bridge extension for Mobile Devin remote development",
+  "version": "0.1.0",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "mobileDevin.startBridge",
+        "title": "Start Mobile Devin Bridge"
+      },
+      {
+        "command": "mobileDevin.stopBridge",
+        "title": "Stop Mobile Devin Bridge"
+      },
+      {
+        "command": "mobileDevin.showStatus",
+        "title": "Show Mobile Devin Status"
+      }
+    ],
+    "configuration": {
+      "title": "Mobile Devin",
+      "properties": {
+        "mobileDevin.websocketPort": {
+          "type": "number",
+          "default": 3001,
+          "description": "WebSocket server port for mobile connection"
+        },
+        "mobileDevin.autoStart": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically start bridge when VS Code opens"
+        },
+        "mobileDevin.enableFileWatcher": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable file watcher for real-time sync"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/node": "^18.x",
+    "@types/uuid": "^10.0.0",
+    "@types/vscode": "^1.85.0",
+    "@types/ws": "^8.5.5",
+    "typescript": "^5.2.0"
+  },
+  "dependencies": {
+    "chokidar": "^3.5.3",
+    "uuid": "^9.0.1",
+    "ws": "^8.14.2"
+  }
+}

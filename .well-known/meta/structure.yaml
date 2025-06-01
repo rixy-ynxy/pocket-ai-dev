@@ -1,0 +1,146 @@
+# .well-known ディレクトリ構造定義
+# このファイルはAIエージェントがディレクトリ構造を理解するための定義です
+
+version: "2.0"
+last_updated: "2025-03-23"
+
+# ディレクトリ構造定義
+directories:
+  - path: "/"
+    description: "ルートディレクトリ"
+    purpose: "組織の標準とAIエージェント情報の格納"
+    
+  - path: "/ai"
+    description: "AIエージェント関連"
+    purpose: "AIエージェントの動作を定義する設定"
+    subdirectories:
+      - path: "/ai/config"
+        description: "AIエージェント設定"
+        purpose: "動作パラメータと基本設定"
+        files:
+          - name: "main.yaml"
+            description: "AIエージェントの基本設定"
+          - name: "agents-cursor.yaml"
+            description: "Cursor AIエージェント固有の設定"
+          - name: "agents-windsurf.yaml"
+            description: "Windsurf AIエージェント固有の設定"
+      - path: "/ai/principles"
+        description: "AIエージェント行動原則"
+        purpose: "基本的な行動指針と制約"
+        files:
+          - name: "main.yaml"
+            description: "AIエージェントの行動原則"
+          - name: "core.yaml"
+            description: "コア行動原則"
+    
+  - path: "/governance"
+    description: "ガバナンス関連"
+    purpose: "組織のポリシーとガイドライン"
+    subdirectories:
+      - path: "/governance/policies"
+        description: "組織ポリシー"
+        purpose: "開発プロセスやコーディングポリシー"
+      - path: "/governance/security"
+        description: "セキュリティポリシー"
+        purpose: "セキュリティ関連のガイドライン"
+    
+  - path: "/domains"
+    description: "ドメイン知識"
+    purpose: "組織のドメイン知識とモデル"
+    subdirectories:
+      - path: "/domains/models"
+        description: "ドメインモデル"
+        purpose: "主要なドメインモデルの定義"
+        files:
+          - name: "bounded-contexts.md"
+            description: "境界づけられたコンテキスト定義"
+          - name: "domain-definitions.md"
+            description: "ドメイン定義"
+          - name: "service-definitions.md"
+            description: "サービス定義"
+      - path: "/domains/rules"
+        description: "ドメインルール"
+        purpose: "ドメイン固有のルールとパターン"
+      - path: "/domains/language"
+        description: "ユビキタス言語"
+        purpose: "ドメイン用語の定義と使用法"
+    
+  - path: "/standards"
+    description: "開発標準"
+    purpose: "開発に関する標準とベストプラクティス"
+    subdirectories:
+      - path: "/standards/code"
+        description: "コード規約"
+        purpose: "言語・技術別のコーディング規約"
+      - path: "/standards/architecture"
+        description: "アーキテクチャ"
+        purpose: "アーキテクチャパターンと原則"
+      - path: "/standards/testing"
+        description: "テスト標準"
+        purpose: "テスト戦略と方法論"
+      - path: "/standards/ui"
+        description: "UI標準"
+        purpose: "UI/UX設計ガイドライン"
+      - path: "/standards/infrastructure"
+        description: "インフラ標準"
+        purpose: "インフラストラクチャのベストプラクティス"
+    
+  - path: "/templates"
+    description: "テンプレート"
+    purpose: "再利用可能なテンプレート"
+    subdirectories:
+      - path: "/templates/project"
+        description: "プロジェクト構造テンプレート"
+        purpose: "新規プロジェクト用のテンプレート"
+      - path: "/templates/docs"
+        description: "ドキュメントテンプレート"
+        purpose: "各種ドキュメントのテンプレート"
+    
+  - path: "/workflows"
+    description: "ワークフロー"
+    purpose: "開発プロセスとワークフロー定義"
+    subdirectories:
+      - path: "/workflows/ci-cd"
+        description: "CI/CDパイプライン"
+        purpose: "継続的インテグレーション/デリバリーの定義"
+      - path: "/workflows/deployment"
+        description: "デプロイメントプロセス"
+        purpose: "デプロイ手順とベストプラクティス"
+    
+  - path: "/meta"
+    description: "メタ情報"
+    purpose: "ディレクトリ自体の説明とバージョン情報"
+    files:
+      - name: "structure.yaml"
+        description: "ディレクトリ構造定義"
+      - name: "versions.yaml"
+        description: "コンポーネントのバージョン情報"
+
+# ファイル拡張子とその意味
+file_extensions:
+  - extension: ".yaml"
+    description: "設定ファイル、定義ファイル"
+  - extension: ".md"
+    description: "マークダウン形式のドキュメント"
+  - extension: ".json"
+    description: "JSONデータファイル"
+
+# 設計原則
+design_principles:
+  - name: "シンプルさ"
+    description: "最大3階層の浅い構造を維持する"
+  - name: "明確な責務"
+    description: "各ディレクトリは単一の明確な目的を持つ"
+  - name: "汎用性"
+    description: "プロジェクト固有の情報は含まない"
+  - name: "自己完結性"
+    description: "必要な参照情報はすべて含まれる"
+  - name: "AI対応"
+    description: "AIエージェントが効率的に利用できる構造"
+
+# AIエージェントのためのナビゲーションヒント
+navigation_tips:
+  - "AIエージェントは常に最新の標準に基づいて提案を行うこと"
+  - "特定のドメイン情報が必要な場合は /domains ディレクトリを参照すること"
+  - "コード生成の際は /standards/code ディレクトリの規約に従うこと"
+  - "ガバナンス要件の確認が必要な場合は /governance ディレクトリを参照すること" 

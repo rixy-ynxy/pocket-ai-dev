@@ -1,0 +1,637 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Well-Known標準区分統合型作業完了自動ワークフローシステム
+
+## 概要
+
+Cursor AIの作業が一区切りついてユーザーのレビュー待ちになった際に、以下の5つのフェーズを最適化された順番で自動実行するワークフローシステムです。
+
+**最適化されたワークフロー順序**:
+1. **@report-generation-guideline.mdc** - 作業完了レポート自動生成
+2. **要件定義の追記更新** - プロジェクト固有の要件定義ドキュメントの更新
+3. **@well-known-document-categorization-standard.mdc** - Well-Known標準への汎用化情報追記更新
+4. **@task-progress-management.mdc** - タスク進捗管理・チェックリスト更新
+5. **@git-add-commit-push-pr-gh.mdc** - Git操作・Pull Request作成
+
+## 📋 ワークフロー論理的順序の根拠
+
+```yaml
+最適化理由:
+  Step_1_レポート生成:
+    目的: "作業内容の整理・構造化"
+    成果物: "包括的な作業内容レポート"
+    
+  Step_2_要件定義更新:
+    目的: "プロジェクト固有の要件・仕様の更新"
+    成果物: "最新の要件定義ドキュメント・実装状況の反映"
+    
+  Step_3_Well-Known汎用化:
+    目的: "汎用的な標準・パターンの抽出とWell-Known配置"
+    判定基準: "汎用性・抽象度・再利用可能性・技術非依存性"
+    配置決定: "Well-Known標準への情報追記・新規標準作成"
+    
+  Step_4_タスク管理更新:
+    目的: "完了作業の進捗反映・チェックリスト更新"
+    成果物: "最新の進捗管理状況・本リポジトリ全体進捗の正確な反映"
+    
+  Step_5_Git操作:
+    目的: "全ての更新を含む最終状態でのバージョン管理"
+    成果物: "進捗反映済みの組織化されたコミット・Pull Request"
+```
+
+---
+
+## トリガー条件
+
+以下のいずれかの状況でこのワークフローが自動実行されます：
+
+### 自動判定トリガー
+- **技術標準・仕様書作成完了**: 新しい技術標準や仕様書の作成が完了した場合
+- **機能実装完了**: 新機能やコンポーネントの実装が完了し、動作テストが成功した場合
+- **環境構築完了**: 開発環境やインフラ設定が完了し、正常動作を確認した場合
+- **統合・設定完了**: 外部サービス統合や重要な設定作業が完了した場合
+- **フェーズ区切り完了**: Phase内の主要な作業区切りが完了した場合
+- **ドキュメント体系整理完了**: ドキュメント構造の大幅な変更・整理が完了した場合
+- **アーキテクチャ実装完了**: Clean Architectureなど重要なアーキテクチャ実装が完了した場合
+- **要件定義更新完了**: 要件分析・システム設計・実装計画の更新が完了した場合
+
+### キーワードベース判定
+AIが以下のフレーズを検出した場合、自動的にワークフローを開始：
+- "実装完了"、"構築完了"、"設定完了"
+- "動作テスト成功"、"正常動作確認"
+- "Phase X 完了"、"フェーズ完了"
+- "一区切り"、"レビュー待ち"
+- "標準作成完了"、"仕様書完成"
+- "ドキュメント整理完了"、"区分完了"
+- "要件定義更新完了"、"再編成完了"
+
+### ユーザー明示的指示
+- ユーザーが「作業完了ワークフロー実行」「@work-completion-automation」を指示した場合
+- ユーザーが「Well-Known標準区分ワークフロー実行」を指示した場合
+
+---
+
+## ワークフロー実行手順
+
+### Phase 1: 作業完了レポート生成 (@report-generation-guideline.mdc)
+
+```yaml
+step: completion_report_generation
+description: "作業完了レポートの自動生成・構造化"
+priority: 1
+actions:
+  1. システム日時取得・ファイル名決定:
+    - 現在のシステム日時取得（MMDD形式）
+    - 作業概要を分析して適切なファイル名生成
+    - reports/ ディレクトリへの保存準備
+  
+  2. レポート構造化作成:
+    - 概要 (Overview): 主要指示・タスク目的
+    - 初期状況・課題: 作業開始前の状況・解決した問題
+    - 実施した対応とプロセス: 時系列詳細記録
+      * ステップごとの説明・実行コマンド・ファイル編集
+      * 利用ツール・参照情報・判断理由
+      * 発生した問題と解決策・設計意図
+    - 結果と現状: 達成内容・テスト結果・影響範囲
+    - 今後の課題・推奨事項: 未解決問題・改善提案
+  
+  3. レポート品質確保:
+    - 客観性・正確性・具体性の確保
+    - 専門用語説明・可読性向上
+    - 再現性確保・網羅性チェック
+    
+  4. 次フェーズ準備:
+    - 作成・変更されたドキュメントのリスト化
+    - 要件定義への影響範囲分析
+    - Well-Known標準候補の特定・整理
+```
+
+### Phase 2: 要件定義の追記更新
+
+```yaml
+step: requirements_definition_update
+description: "プロジェクト固有の要件定義ドキュメントの更新・追記"
+priority: 2
+actions:
+  1. 要件定義ディレクトリ分析:
+    - chat-consultation-docs/要件定義/ の各ディレクトリ確認
+    - 01-要求分析 から 11-アーキテクチャ までの体系的確認
+    - 今回作業に関連する要件定義領域の特定
+  
+  2. 関連ドキュメントの更新:
+    対象ディレクトリの判定:
+      - 01-要求分析: 新しいステークホルダー要求がある場合
+      - 02-機能要件: 機能実装・仕様変更がある場合
+      - 03-非機能要件: パフォーマンス・セキュリティ要件変更
+      - 04-システム設計: 設計変更・実装状況更新
+      - 05-認証・セキュリティ: セキュリティ関連実装
+      - 06-AI・エージェント: AI機能・エージェント関連
+      - 07-API・インテグレーション: API・外部連携関連
+      - 08-パフォーマンス・拡張性: 性能・拡張性関連
+      - 09-テスト戦略: テスト実装・戦略更新
+      - 10-実装計画: 実装進捗・計画更新
+      - 11-アーキテクチャ: アーキテクチャ実装・設計変更
+    
+    更新内容:
+      - プロジェクト固有の実装詳細追記
+      - 環境・設定・具体的な値の記録
+      - 実装済み機能の詳細仕様
+      - テスト結果・動作確認内容
+      - 今後の実装予定・課題
+  
+  3. INDEX.md・README.md の更新:
+    - 各ディレクトリのINDEX.mdに新規ドキュメント情報追加
+    - 関連ドキュメント間の相互参照設定
+    - 要件定義全体のREADME.md更新
+    - 更新履歴の記録
+  
+  4. 要件トレーサビリティ確保:
+    - RDRA手法に基づく要求から実装までの追跡
+    - ステークホルダー要求と実装の対応関係明確化
+    - 変更影響範囲の文書化
+```
+
+### Phase 3: Well-Known標準への汎用化情報追記更新 (@well-known-document-categorization-standard.mdc)
+
+```yaml
+step: well_known_standardization
+description: "汎用的な標準・パターンのWell-Known配置・追記更新"
+priority: 3
+actions:
+  1. 汎用化候補の分析・抽出:
+    汎用性判定質問:
+      - Q1: "この内容は他のプロジェクトでも再利用できるか？"
+      - Q2: "この内容は実装非依存の標準・パターンか？"
+      - Q3: "この内容に具体的な設定値・固有名詞が含まれるか？"
+      - Q4: "この内容は特定の技術スタック・ツールに依存するか？"
+    
+    汎用化処理:
+      - プロジェクト固有名詞の変数・パラメータ化
+      - 具体的設定値の抽象化
+      - 技術スタック非依存の記述への変換
+      - 再利用可能なパターン・テンプレート化
+  
+  2. Well-Known標準への配置・更新:
+    配置先判定:
+      - .well-known/standards/architecture/: アーキテクチャパターン
+      - .well-known/standards/components/: 再利用可能コンポーネント
+      - .well-known/standards/principles/: 設計原則・ガイドライン
+      - .well-known/analysis/rdra/: RDRA手法関連標準
+      - .well-known/governance/: プロジェクト管理・ガバナンス標準
+      - .well-known/implementation/: 実装標準・テンプレート
+    
+    配置・更新処理:
+      - 既存Well-Known標準への追記・更新
+      - 新規標準ファイルの作成
+      - 汎用性・再利用性の確保
+      - 複数プロジェクトでの適用可能性検証
+  
+  3. 相互参照・整合性確保:
+    - Well-Known標準からプロジェクト要件への参照設定
+    - プロジェクト要件からWell-Known標準への参照設定
+    - ドキュメント間の整合性確認
+    - トレーサビリティ確保
+  
+  4. 品質チェック・検証:
+    Well_Known_品質確認:
+      - [ ] プロジェクト固有の固有名詞を除去済み
+      - [ ] 具体的設定値を変数・パラメータ化済み
+      - [ ] 特定技術スタックに依存しない記述
+      - [ ] 複数プロジェクトでの適用可能性確認
+      
+    Project_Requirements_品質確認:
+      - [ ] Well-Known標準への明確な参照
+      - [ ] プロジェクト固有要素の明確化
+      - [ ] 即座に実装可能な詳細度
+      - [ ] 環境・設定の具体的記述
+```
+
+### Phase 4: タスク進捗管理更新 (@task-progress-management.mdc)
+
+```yaml
+step: task_progress_update
+description: "完了作業のタスク管理ファイル反映・進捗更新"
+priority: 4
+actions:
+  1. 作業内容の最終分析・整理:
+    - Phase 1-3で実行された内容の詳細把握
+    - レポート生成・要件定義更新・Well-Known標準化の成果確認
+    - 関連ファイル・設定・ドキュメントの最終確認
+  
+  2. ⭐️ 【最優先・絶対位置】本リポジトリ全体進捗チェックリスト更新:
+    絶対優先処理（変更不可）:
+      - chat-consultation-docs/reports/task-management.md の最優先処理
+      - 「完全実装済み（100%完了）」セクションの更新
+      - 「部分実装・進行中」から「完全実装済み」への移動
+      - 新規完了機能の追加・ステータス更新
+      - 実装完了日・稼働状況・確認日の正確な記録
+      
+    具体的チェックリスト処理:
+      - [ ] → [x] への確実な変更実行
+      - 完了率の正確な計算・表示更新
+      - Week X 完了報告セクションの詳細追加
+      - システム構築完了項目の包括的記録
+      - 技術的成果・メトリクス・効果測定の記録
+  
+  3. Phase・セクション特定・詳細更新:
+    - 今回作業がどのチェックリスト項目に対応するか最終判断
+    - 必要に応じて新しいチェックリスト項目追加
+    - 要件定義更新作業の進捗項目追加
+    - Well-Known標準創出・汎用化作業の記録
+  
+  4. task-management.md の包括的更新:
+    チェックリスト項目更新 ([ ] → [x]):
+      - 実装完了機能の確実なマーキング
+      - ステータス欄の正確な更新（🟢 稼働中 等）
+      - 最終確認日の更新
+      
+    新規項目追加:
+      - 実装した新機能・設定・要件定義更新システム
+      - システム構成・技術詳細・効果測定
+      - Week X完了報告セクションの詳細展開
+      
+    進捗サマリー更新:
+      - Phase進捗率の正確な計算・表示
+      - 全体進捗（X/Y機能 Z%）の更新
+      - Well-Known標準作成・要件定義更新の記録
+      - 更新履歴への詳細記録・日時・内容・影響範囲
+  
+  5. 更新内容の検証・品質確保:
+    チェックリスト整合性確認:
+      - 完了マーク（[x]）の確実な適用確認
+      - 進捗率計算の数学的正確性確認
+      - セクション間の整合性・矛盾チェック
+      
+    品質確認:
+      - ドキュメント体系の整合性確認
+      - 全ワークフロー成果の品質確認
+      - 本リポジトリ全体進捗の正確性確認
+```
+
+### Phase 5: Git操作・PR作成 (@git-add-commit-push-pr-gh.mdc)
+
+```yaml
+step: git_pr_automation
+description: "進捗更新完了後の最終状態でのバージョン管理・PR作成"
+priority: 5
+actions:
+  1. ブランチ戦略自動判定:
+    - git branch -r でリモートブランチ確認
+    - .github/workflows ディレクトリ存在確認
+    - develop/development ブランチ存在確認
+    - 本番デプロイ設定からベースブランチ判定
+  
+  2. Git操作実行:
+    - 新しいブランチ作成（feature/作業概要ベース）
+    - 全変更のステージング（git add .）
+    - 構造化されたコミットメッセージ生成:
+      * レポート生成内容の要約
+      * 要件定義更新結果の説明
+      * Well-Known標準化・汎用化の詳細
+      * タスク進捗管理更新の内容
+      * RDRA手法適用・トレーサビリティ確保
+    - リモートプッシュ（git push origin ブランチ名）
+  
+  3. Pull Request作成:
+    - タイトル自動生成（作業内容+要件定義更新+Well-Known標準化+進捗更新ベース）
+    - 本文Markdown形式自動生成:
+      * 概要・変更理由・変更内容
+      * 要件定義更新の詳細・影響範囲
+      * Well-Known標準化・汎用化結果
+      * タスク進捗管理更新の詳細
+      * RDRA手法適用・トレーサビリティ
+      * テスト方法・レビューワーへの特記事項
+      * 関連ドキュメント・チェックリスト
+    - 適切なベースブランチ指定
+    - gh pr create コマンド実行
+```
+
+---
+
+## 🎯 統合ワークフローの特徴・メリット
+
+### 1. 論理的な作業順序
+
+```yaml
+順序最適化メリット:
+  作業内容整理→要件定義更新→Well-Known汎用化→タスク更新→Git操作:
+    - "作業内容の包括的把握からスタート"
+    - "プロジェクト固有要件の適切な更新"
+    - "汎用的標準の抽出・蓄積"
+    - "進捗の正確な反映"
+    - "組織化された状態でのバージョン管理"
+    
+  品質向上効果:
+    - "要件定義の継続的メンテナンス"
+    - "再利用可能な標準の積極的創出"
+    - "プロジェクト固有と汎用情報の適切な分離"
+    - "RDRA手法に基づく体系的要件管理"
+    - "全体的な情報アーキテクチャの向上"
+```
+
+### 2. RDRA手法の強化・充実
+
+```yaml
+RDRA_強化効果:
+  要件定義の体系的管理:
+    - "ステークホルダー要求から実装までの一貫した追跡"
+    - "要件変更の影響範囲分析"
+    - "実装完了の要件への確実な反映"
+    
+  Well-Known_標準の創出:
+    - "汎用的パターンの継続的抽出"
+    - "技術標準の継続的蓄積"
+    - "プロジェクト横断での再利用促進"
+    - "組織的知識資産の構築"
+```
+
+### 3. トレーサビリティ・整合性の自動確保
+
+```yaml
+整合性管理自動化:
+  相互参照関係:
+    - "要件定義 ← → Well-Known標準 参照の自動設定"
+    - "プロジェクト固有 ← → 汎用標準 参照の自動設定"
+    - "ドキュメント間依存関係の可視化"
+    
+  変更影響追跡:
+    - "要件変更時の実装への影響分析"
+    - "標準更新時の影響範囲自動特定"
+    - "全体アーキテクチャの整合性維持"
+```
+
+---
+
+## 実行制御・設定
+
+### 自動実行の判定基準
+
+```yaml
+automation_criteria:
+  # 必須条件（すべて満たす必要がある）
+  required_conditions:
+    - significant_work_completed: true  # 重要な作業が完了している
+    - no_blocking_errors: true         # ブロッカーエラーが存在しない
+    - ready_for_review: true           # レビュー可能な状態である
+    - document_changes_exist: true     # ドキュメント変更が存在する
+  
+  # 除外条件（いずれかに該当する場合は実行しない）
+  exclusion_conditions:
+    - work_in_progress: true           # 作業が進行中
+    - experimental_changes: true       # 実験的な変更のみ
+    - partial_implementation: true     # 部分実装のみ
+    - debug_session: true             # デバッグセッション中
+    - no_documentable_changes: true   # ドキュメント化すべき変更がない
+```
+
+### カスタマイズ設定
+
+```yaml
+workflow_customization:
+  # 各Phase の有効/無効設定
+  phases:
+    completion_report_generation: true
+    requirements_definition_update: true
+    well_known_standardization: true
+    task_progress_update: true
+    git_pr_automation: true
+  
+  # Well-Known標準化の感度設定
+  standardization_sensitivity:
+    well_known_threshold: "medium"     # low/medium/high
+    generalization_level: "strict"    # loose/normal/strict
+    auto_placement: true               # 自動配置 vs 手動確認
+  
+  # 自動判定の感度設定
+  automation_sensitivity:
+    auto_trigger: "medium"             # low/medium/high
+    keyword_matching: "strict"         # loose/normal/strict
+  
+  # ユーザー確認設定
+  confirmation:
+    require_user_approval: false       # 自動実行 vs ユーザー確認
+    show_summary_before_execution: true
+    confirm_well_known_placement: false  # Well-Known配置の確認
+```
+
+---
+
+## エラーハンドリング・フォールバック
+
+### 各Phase でのエラー対応
+
+```yaml
+error_handling:
+  completion_report_generation:
+    - insufficient_info: "作業内容の詳細をユーザーに確認"
+    - file_creation_failed: "代替ディレクトリで再試行"
+    - template_error: "最小限のレポート形式で作成"
+  
+  requirements_definition_update:
+    - target_directory_not_found: "要件定義ディレクトリを検索・作成"
+    - update_conflict: "既存要件との競合解決"
+    - reference_creation_failed: "手動での相互参照設定提案"
+    - index_update_failed: "INDEX.md更新の手動実行提案"
+  
+  well_known_standardization:
+    - generalization_failed: "汎用化困難な場合のプロジェクト固有配置"
+    - placement_conflict: "既存Well-Known標準との競合解決"
+    - quality_check_failed: "品質問題の詳細報告・修正提案"
+  
+  task_progress_update:
+    - file_not_found: "task-management.md を検索・作成"
+    - permission_error: "ユーザーに権限確認を要求"
+    - format_error: "バックアップ作成後に修復試行"
+    - progress_calculation_error: "手動での進捗率計算要求"
+  
+  git_pr_automation:
+    - branch_exists: "ユニークなブランチ名で再試行"
+    - permission_denied: "リポジトリ権限をユーザーに確認"
+    - network_error: "後で再試行するか手動実行提案"
+    - large_changeset: "分割コミット・PR提案"
+```
+
+---
+
+## 🎯 実践適用例・ユースケース
+
+### ユースケース1: 要件定義体系整理完了時
+
+```yaml
+実行例_要件定義整理:
+  トリガー: "要件定義ディレクトリの再編成が完了しました"
+  
+  Phase_1_レポート生成:
+    - ファイル名: "1227-requirements-reorganization-completion.md"
+    - 内容: 再編成プロセス・ディレクトリ構造・INDEX作成詳細
+  
+  Phase_2_要件定義更新:
+    - 各ディレクトリのINDEX.md更新・充実
+    - README.md での全体ナビゲーション更新
+    - 相互参照リンクの設定・整合性確保
+  
+  Phase_3_Well-Known標準化:
+    判定結果:
+      - 要件定義体系化手法 → .well-known/analysis/rdra/
+      - ドキュメント構造パターン → .well-known/standards/documentation/
+    相互参照: RDRA標準←→プロジェクト要件の参照関係設定
+  
+  Phase_4_タスク進捗管理:
+    - 【最優先】要件定義体系整理完了のマーキング
+    - ドキュメント管理システム構築の記録
+    - RDRA手法適用・Well-Known標準創出の記録
+  
+  Phase_5_Git操作:
+    - ブランチ: feature/requirements-reorganization-with-well-known
+    - コミット: "feat: 要件定義体系整理完了 - RDRA手法適用・Well-Known標準化・進捗更新"
+    - PR: 体系的な要件定義・Well-Known標準・進捗更新を含む包括的PR
+```
+
+### ユースケース2: アーキテクチャ実装完了時
+
+```yaml
+実行例_アーキテクチャ実装:
+  トリガー: "Clean Architecture完全実装が成功しました"
+  
+  Phase_1_レポート生成:
+    - 実装詳細・4層構造・Repository・UseCase の詳細記録
+  
+  Phase_2_要件定義更新:
+    - 11-アーキテクチャ/ ディレクトリの実装状況更新
+    - 04-システム設計/ の実装完了記録
+    - 10-実装計画/ の進捗・マイルストーン更新
+  
+  Phase_3_Well-Known標準化:
+    判定結果:
+      - Clean Architecture設計パターン → .well-known/standards/architecture/
+      - レイヤー分離原則 → .well-known/standards/principles/
+    相互参照: アーキテクチャ標準←→プロジェクト実装の参照設定
+  
+  Phase_4_タスク進捗管理:
+    - Clean Architecture実装完了のマーキング
+    - Phase進捗大幅更新・アーキテクチャ完了記録
+    - Well-Known標準創出の記録
+  
+  Phase_5_Git操作:
+    - 要件定義更新・Well-Known標準化・進捗更新を含む適切なPR作成
+```
+
+---
+
+## セキュリティ・安全性・品質保証
+
+### 品質保証メカニズム
+
+```yaml
+quality_assurance:
+  要件定義品質:
+    - RDRA手法準拠の体系的要件管理
+    - ステークホルダー要求から実装までのトレーサビリティ
+    - 要件変更の影響範囲分析
+    
+  Well-Known標準品質:
+    - 汎用性判定の多角的評価
+    - 技術依存性分析の精度確保
+    - 相互参照整合性の自動検証
+    
+  プロセス品質:
+    - 各Phase成果物の品質チェック
+    - エラー時の安全なフォールバック
+    - ユーザーフィードバック統合
+    
+  情報セキュリティ:
+    - 機密情報の適切な配置判定
+    - プロジェクト固有情報の保護
+    - Well-Known標準での機密性確保
+```
+
+### バックアップ・安全性
+
+```yaml
+safety_measures:
+  # バックアップ作成
+  backup_before_modification: true
+  
+  # 重要ファイルの保護
+  protected_files:
+    - ".env*"
+    - "package.json"
+    - "tsconfig.json"
+    - ".well-known/standards/**"
+    - "chat-consultation-docs/要件定義/**"
+  
+  # Git操作の安全性
+  git_safety:
+    - force_push_disabled: true
+    - main_branch_protection: true
+    - commit_message_validation: true
+    - document_structure_validation: true
+```
+
+---
+
+## 実行ログ・監査・継続改善
+
+### 実行トレース記録
+
+```yaml
+audit_logging:
+  # 実行ログの記録先
+  log_location: ".cursor/logs/well-known-integrated-workflow.log"
+  
+  # 記録内容
+  log_content:
+    - execution_timestamp
+    - trigger_condition
+    - phases_executed
+    - requirements_definition_updates
+    - well_known_standardization_results
+    - well_known_placements
+    - cross_references_created
+    - task_progress_updates
+    - success_failure_status
+    - error_messages
+    - generated_files
+    - git_operations
+  
+  # 保持期間・分析
+  retention: "90_days"
+  analysis: "monthly_quality_review"
+```
+
+### 継続改善・フィードバック
+
+```yaml
+continuous_improvement:
+  要件定義管理向上:
+    - RDRA手法適用の効果測定
+    - 要件変更管理の精度向上
+    - ステークホルダー満足度の向上
+    
+  Well-Known標準化精度向上:
+    - 汎用化判定の精度測定
+    - 誤分類ケースの分析・学習
+    - ユーザーフィードバックの統合
+    
+  プロセス最適化:
+    - 各Phaseの実行時間測定・最適化
+    - エラー発生パターンの分析・対策
+    - ワークフロー順序の継続的検証
+    
+  品質向上:
+    - Well-Known標準の再利用率測定
+    - 要件定義の実装活用度確認
+    - 全体的なドキュメント品質向上
+```
+
+---
+
+**作成日**: 2025年12月27日  
+**最終更新**: 2025年12月27日（ワークフロー順序最適化）  
+**適用範囲**: 全プロジェクト・技術標準作成時  
+**更新頻度**: 四半期または重要ワークフロー改善時
+
+*このワークフローにより、Cursor AIの作業完了時の管理業務が最適化され、同時にRDRA手法に基づく要件定義の継続的メンテナンスとWell-Known標準の積極的創出が自動化されます。これにより、プロジェクト進捗の透明性・要件定義品質・再利用可能性が飛躍的に向上します。*
